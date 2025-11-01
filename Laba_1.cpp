@@ -15,7 +15,7 @@ struct Book
 };
 
 Book books[MAX];
-int k =0 ;
+int k = 0 ;
 //k это количество
 
 void loadBooks(const char *filename)
@@ -52,7 +52,7 @@ void newbook()
 {
     if (k>=MAX)
     {
-    cout << "Превышен лимит расходов!" << endl;
+    cout << "Превышен лимит книг!" << endl;
         return;
     }
     Book random;
@@ -65,11 +65,17 @@ void newbook()
 
     cout << "Год прочтения: ";
     cin >> random.year;
-
+    while (random.year < 1000 || random.year > 2025) {
+        cout << "Ошибка: год должен быть от 1000 до 2025! " << endl << "Введите снова: ";
+        cin >> random.year;
+    }
     cout << "Ваша оценка (0-10): ";
     cin >> random.rating;
+    while (random.rating < 0 || random.rating > 10) {
+        cout << "Ошибка: оценка должна быть от 0 до 10!" << endl <<  "Введите снова: ";
+        cin >> random.rating;
+    }
 
-    // Проверяем корректность оценки
     if (random.rating < 0 or random.rating > 10)
     {
         cout << "Ошибка: оценка должна быть от 0 до 10!" << endl;
@@ -106,7 +112,7 @@ void showall()
              << setw(8) << books[i].rating << endl;
     }
 }
-void showstatku()
+void showstat()
 {
     if (k == 0)
     {
@@ -126,7 +132,7 @@ void showstatku()
         }
     }
     float sr = total / k;
-     cout << "\n--- Статистика ---\n";
+    cout << "\n--- Статистика ---\n";
     cout << "Количество прочитанных книг: " << k << endl;
     cout << "Средняя оценка: "  << sr << endl;
     cout << "Самая высоко оценённая книга: " << books[best].title  << books[best].rating << endl;
@@ -144,13 +150,13 @@ int main()
 {
     loadBooks("books.txt");
 
-    int c;
+    int choice;
     do
     {
         showmenu();
-        cin >> c;
+        cin >> choice;
 
-        switch (c)
+        switch ( choice)
         {
         case 1:
             newbook();
@@ -159,7 +165,7 @@ int main()
             showall();
             break;
         case 3:
-            showstatku();
+            showstat();
             break;
         case 4:
             cout << "Выход из программы.\n";
@@ -168,7 +174,7 @@ int main()
             cout << "Неверный выбор.\n";
         }
 
-    } while (c != 4);
+    } while ( choice != 4);
 
     return 0;
 }
