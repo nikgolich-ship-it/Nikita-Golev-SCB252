@@ -1,1 +1,0 @@
-# Nikita-Golev-SCB252
